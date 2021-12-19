@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         userAdapter = UsersAdapter(arrayListOf(), object : UsersAdapter.OnUserClickListener {
             override fun onUserClick(username: String) {
-                TODO("Not yet implemented")
+                viewModel.onUserClick()
             }
 
         })
@@ -45,6 +45,12 @@ class MainActivity : AppCompatActivity() {
             userAdapter.addItems(it)
         })
 
-        viewModel.loadUsers()
+        binding.includeGenericError.btnRetry.setOnClickListener {
+            viewModel.onRetryClick()
+        }
+
+        binding.includeNetworkError.btnRetry.setOnClickListener {
+            viewModel.onRetryClick()
+        }
     }
 }

@@ -29,6 +29,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text_user_name"
+            style="@style/TextAppearance.Kdg.Subtitle2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -40,6 +41,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text_user_detail"
+            style="@style/TextAppearance.Kdg.Body2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

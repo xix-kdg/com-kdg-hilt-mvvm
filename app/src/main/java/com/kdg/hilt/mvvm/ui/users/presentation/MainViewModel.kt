@@ -21,6 +21,9 @@ class MainViewModel @Inject constructor(
     private val userRepositoryImpl: UserRepositoryImpl
 ) : ViewModel() {
 
+    private val _isContentVisible = MutableLiveData<Boolean>()
+    val isContentVisible: LiveData<Boolean> = _isContentVisible
+
     private val _isLoadingIndicatorVisible = MutableLiveData<Boolean>()
     val isLoadingIndicatorVisible: LiveData<Boolean> = _isLoadingIndicatorVisible
 
@@ -36,13 +39,26 @@ class MainViewModel @Inject constructor(
     private val _users = MutableLiveData<List<User>>()
     val users: LiveData<List<User>> = _users
 
-    fun loadUsers() {
+    init {
+        loadUsers()
+    }
+
+    fun onUserClick() {
+        // todo
+    }
+
+    fun onRetryClick() {
+        loadUsers()
+    }
+
+    private fun loadUsers() {
         _isLoadingIndicatorVisible.value = true
         viewModelScope.launch(dispatcherProvider.computation) {
             val result = userRepositoryImpl.getUsers(0)
             withContext(dispatcherProvider.main) {
                 when (result) {
                     is Result.Success -> {
+                        showContent()
                         _users.value = result.data
                     }
                     is Result.Error -> {
@@ -59,7 +75,16 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    private fun showContent() {
+        _isLoadingIndicatorVisible.value = false
+        _isGenericErrorVisible.value = false
+        _isSessionExpiredErrorVisible.value = false
+        _isNetworkErrorVisible.value = false
+        _isContentVisible.value = true
+    }
+
     private fun showNetworkError() {
+        _isContentVisible.value = false
         _isLoadingIndicatorVisible.value = false
         _isGenericErrorVisible.value = false
         _isSessionExpiredErrorVisible.value = false
@@ -67,6 +92,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun showGenericError() {
+        _isContentVisible.value = false
         _isLoadingIndicatorVisible.value = false
         _isNetworkErrorVisible.value = false
         _isSessionExpiredErrorVisible.value = false
@@ -74,6 +100,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun showSessionExpiredError() {
+        _isContentVisible.value = false
         _isLoadingIndicatorVisible.value = false
         _isNetworkErrorVisible.value = false
         _isGenericErrorVisible.value = false
