@@ -3,7 +3,9 @@ package com.kdg.hilt.mvvm.ui.users.presentation
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.kdg.hilt.mvvm.R
 import com.kdg.hilt.mvvm.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,8 +20,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Init binding
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView<ActivityMainBinding>(
+            this,
+            R.layout.activity_main
+        ).apply {
+            this.lifecycleOwner = this@MainActivity
+            this.viewModel = this@MainActivity.viewModel
+        }
         // Init toolbar
         setSupportActionBar(binding.toolbar)
         supportActionBar?.title = ""
