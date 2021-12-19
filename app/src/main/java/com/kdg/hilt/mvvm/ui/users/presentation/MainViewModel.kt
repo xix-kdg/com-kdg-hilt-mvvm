@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kdg.hilt.mvvm.data.remote.domain.framework.ErrorComponent
 import com.kdg.hilt.mvvm.data.remote.domain.framework.Result
 import com.kdg.hilt.mvvm.data.remote.domain.model.User
 import com.kdg.hilt.mvvm.framework.CoroutinesDispatcherProvider
-import com.kdg.hilt.mvvm.framework.Event
 import com.kdg.hilt.mvvm.ui.users.data.UserRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -17,14 +17,21 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val dispatcherProvider: CoroutinesDispatcherProvider,
+    private val errorComponent: ErrorComponent,
     private val userRepositoryImpl: UserRepositoryImpl
 ) : ViewModel() {
 
     private val _isLoadingIndicatorVisible = MutableLiveData<Boolean>()
     val isLoadingIndicatorVisible: LiveData<Boolean> = _isLoadingIndicatorVisible
 
-    private val _showError = MutableLiveData<Event<String>>()
-    val showError: LiveData<Event<String>> = _showError
+    private val _isNetworkErrorVisible = MutableLiveData<Boolean>()
+    val isNetworkErrorVisible: LiveData<Boolean> = _isNetworkErrorVisible
+
+    private val _isGenericErrorVisible = MutableLiveData<Boolean>()
+    val isGenericErrorVisible: LiveData<Boolean> = _isGenericErrorVisible
+
+    private val _isSessionExpiredErrorVisible = MutableLiveData<Boolean>()
+    val isSessionExpiredErrorVisible: LiveData<Boolean> = _isSessionExpiredErrorVisible
 
     private val _users = MutableLiveData<List<User>>()
     val users: LiveData<List<User>> = _users
@@ -39,11 +46,37 @@ class MainViewModel @Inject constructor(
                         _users.value = result.data
                     }
                     is Result.Error -> {
-                        _showError.value = Event(result.exception.message ?: "")
+                        errorComponent.processError(
+                            result,
+                            { showNetworkError() },
+                            { showGenericError() },
+                            { showSessionExpiredError() }
+                        )
                     }
                 }
                 _isLoadingIndicatorVisible.value = false
             }
         }
+    }
+
+    private fun showNetworkError() {
+        _isLoadingIndicatorVisible.value = false
+        _isGenericErrorVisible.value = false
+        _isSessionExpiredErrorVisible.value = false
+        _isNetworkErrorVisible.value = true
+    }
+
+    private fun showGenericError() {
+        _isLoadingIndicatorVisible.value = false
+        _isNetworkErrorVisible.value = false
+        _isSessionExpiredErrorVisible.value = false
+        _isGenericErrorVisible.value = true
+    }
+
+    private fun showSessionExpiredError() {
+        _isLoadingIndicatorVisible.value = false
+        _isNetworkErrorVisible.value = false
+        _isGenericErrorVisible.value = false
+        _isSessionExpiredErrorVisible.value = true
     }
 }
