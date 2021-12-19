@@ -82,6 +82,10 @@ dependencies {
     implementation("com.google.code.gson:gson:${rootProject.extra["gson"]}")
     implementation("com.squareup.retrofit2:converter-gson:${rootProject.extra["retrofitConverter"]}")
 
+    // Glide
+    implementation("com.github.bumptech.glide:glide:${rootProject.extra["glide"]}")
+    annotationProcessor("com.github.bumptech.glide:compiler:${rootProject.extra["glide"]}")
+
     testImplementation("junit:junit:4.+")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")

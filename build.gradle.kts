@@ -22,6 +22,7 @@ val daggerHilt by extra("2.38.1")
 val gson by extra("2.8.6")
 val retrofitConverter by extra("2.9.0")
 val httpLogging by extra("4.9.0")
+val glide by extra("4.12.0")
 
 tasks {
     val clean by registering(Delete::class) {
