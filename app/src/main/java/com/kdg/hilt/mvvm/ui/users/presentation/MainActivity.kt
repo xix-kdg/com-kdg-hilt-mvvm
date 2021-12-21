@@ -33,8 +33,8 @@ class MainActivity : AppCompatActivity() {
         // Init recycler view
         val layoutManager = LinearLayoutManager(this)
         userAdapter = UsersAdapter(arrayListOf(), object : UsersAdapter.OnUserClickListener {
-            override fun onUserClick(username: String) {
-                viewModel.onUserClick()
+            override fun onUserClick(login: String) {
+                viewModel.onUserClick(login)
             }
 
         })
@@ -43,6 +43,12 @@ class MainActivity : AppCompatActivity() {
         // Init observers
         viewModel.users.observe(this, {
             userAdapter.addItems(it)
+        })
+
+        viewModel.navigateToProfile.observe(this, { event ->
+            event.getContentIfNotHandled()?.let {
+                startActivity(UserProfileActivity.newIntent(this, it))
+            }
         })
 
         binding.includeGenericError.btnRetry.setOnClickListener {

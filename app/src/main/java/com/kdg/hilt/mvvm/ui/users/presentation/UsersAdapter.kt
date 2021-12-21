@@ -42,7 +42,7 @@ class UsersAdapter(
     }
 
     interface OnUserClickListener {
-        fun onUserClick(username: String)
+        fun onUserClick(login: String)
     }
 
     inner class ViewHolder(private val binding: ItemUserBinding) :

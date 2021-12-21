@@ -8,6 +8,7 @@ import com.kdg.hilt.mvvm.data.remote.domain.framework.ErrorComponent
 import com.kdg.hilt.mvvm.data.remote.domain.framework.Result
 import com.kdg.hilt.mvvm.data.remote.domain.model.User
 import com.kdg.hilt.mvvm.framework.CoroutinesDispatcherProvider
+import com.kdg.hilt.mvvm.framework.Event
 import com.kdg.hilt.mvvm.ui.users.data.UserRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -39,12 +40,15 @@ class MainViewModel @Inject constructor(
     private val _users = MutableLiveData<List<User>>()
     val users: LiveData<List<User>> = _users
 
+    private val _navigateToProfile = MutableLiveData<Event<String>>()
+    val navigateToProfile: LiveData<Event<String>> = _navigateToProfile
+
     init {
         loadUsers()
     }
 
-    fun onUserClick() {
-        // todo
+    fun onUserClick(login: String) {
+        _navigateToProfile.value = Event(login)
     }
 
     fun onRetryClick() {

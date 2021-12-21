@@ -9,4 +9,8 @@
     <string name="message_generic_error">Please try again.</string>
     <string name="title_network_error">Network connection lost</string>
     <string name="message_network_error">Use this moment to reconnect with yourself and try again.</string>
+
+    <!--  Label  -->
+    <string name="label_followers">Followers</string>
+    <string name="label_following">Following</string>
 </resources>
