@@ -1,5 +1,7 @@
 package com.kdg.hilt.mvvm.data.remote.response
 
+import com.kdg.hilt.mvvm.data.remote.domain.model.User
+
 data class GetUserProfileResponse(
     val login: String,
     val id: Int,
@@ -33,4 +35,17 @@ data class GetUserProfileResponse(
     val following: Int,
     val created_at: String,
     val updated_at: String,
-)
+) {
+    fun toUserProfile(): User {
+        return User(
+            id = id,
+            login = login,
+            name = name ?: "",
+            avatarUrl = avatar_url,
+            company = company ?: "",
+            blog = blog ?: "",
+            followerCount = "$followers",
+            followingCount = "$following"
+        )
+    }
+}

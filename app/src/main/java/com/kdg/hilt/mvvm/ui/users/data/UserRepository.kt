@@ -8,5 +8,5 @@ interface UserRepository {
 
     suspend fun getUsers(since: Int): Result<List<User>>
 
-    suspend fun getUserProfile(username: String): Result<GetUserProfileResponse>
+    suspend fun getUserProfile(username: String): Result<User>
 }

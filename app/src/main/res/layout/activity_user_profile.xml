@@ -10,181 +10,182 @@
             type="com.kdg.hilt.mvvm.ui.users.presentation.UserProfileViewModel" />
     </data>
 
-   <RelativeLayout
-       android:id="@+id/container"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-       <ScrollView
-           android:id="@+id/scroll_content"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:fillViewport="true">
+        <ScrollView
+            android:id="@+id/scroll_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:goneUnless="@{safeUnbox(viewModel.isContentVisible())}">
 
-           <androidx.constraintlayout.widget.ConstraintLayout
-               android:id="@+id/layout_content"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:background="@android:color/white">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white">
 
-               <androidx.constraintlayout.widget.Guideline
-                   android:id="@+id/guideline_start"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:orientation="vertical"
-                   app:layout_constraintGuide_begin="16dp" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="16dp" />
 
-               <androidx.constraintlayout.widget.Guideline
-                   android:id="@+id/guideline_end"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:orientation="vertical"
-                   app:layout_constraintGuide_end="16dp" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="16dp" />
 
-               <androidx.constraintlayout.widget.Guideline
-                   android:id="@+id/guideline_center"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:orientation="vertical"
-                   app:layout_constraintGuide_percent=".5" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent=".5" />
 
-               <com.google.android.material.appbar.AppBarLayout
-                   android:id="@+id/appbar"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:background="@android:color/white"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toTopOf="parent">
+                <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/appbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                   <androidx.appcompat.widget.Toolbar
-                       android:id="@+id/toolbar"
-                       android:layout_width="match_parent"
-                       android:layout_height="?actionBarSize" />
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?actionBarSize" />
 
-               </com.google.android.material.appbar.AppBarLayout>
+                </com.google.android.material.appbar.AppBarLayout>
 
-               <androidx.appcompat.widget.AppCompatImageView
-                   android:id="@+id/image_banner"
-                   android:layout_width="0dp"
-                   android:layout_height="0dp"
-                   android:layout_marginTop="24dp"
-                   app:layout_constraintEnd_toStartOf="@id/guideline_end"
-                   app:layout_constraintHeight_percent=".2"
-                   app:layout_constraintStart_toEndOf="@id/guideline_start"
-                   app:layout_constraintTop_toBottomOf="@+id/appbar" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image_banner"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintEnd_toStartOf="@id/guideline_end"
+                    app:layout_constraintHeight_percent=".2"
+                    app:layout_constraintStart_toEndOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@+id/appbar" />
 
-               <androidx.appcompat.widget.AppCompatTextView
-                   android:id="@+id/text_name"
-                   style="@style/TextAppearance.Kdg.Subtitle1"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="16dp"
-                   android:includeFontPadding="false"
-                   android:text="@{viewModel.name}"
-                   android:textAlignment="center"
-                   android:textColor="@android:color/black"
-                   app:layout_constraintEnd_toStartOf="@id/guideline_end"
-                   app:layout_constraintStart_toEndOf="@id/guideline_start"
-                   app:layout_constraintTop_toBottomOf="@id/image_banner"
-                   tools:text="Eren Jaeger" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_name"
+                    style="@style/TextAppearance.Kdg.Subtitle1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:includeFontPadding="false"
+                    android:text="@{viewModel.user.name}"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintEnd_toStartOf="@id/guideline_end"
+                    app:layout_constraintStart_toEndOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/image_banner"
+                    tools:text="Eren Jaeger" />
 
-               <androidx.appcompat.widget.AppCompatTextView
-                   android:id="@+id/text_company"
-                   style="@style/TextAppearance.Kdg.Subtitle2"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="8dp"
-                   android:includeFontPadding="false"
-                   android:text="@{viewModel.company}"
-                   android:textAlignment="center"
-                   android:textColor="@android:color/black"
-                   app:layout_constraintEnd_toStartOf="@id/guideline_end"
-                   app:layout_constraintStart_toEndOf="@id/guideline_start"
-                   app:layout_constraintTop_toBottomOf="@+id/text_name"
-                   tools:text="Paradis" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_company"
+                    style="@style/TextAppearance.Kdg.Subtitle2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:includeFontPadding="false"
+                    android:text="@{viewModel.user.company}"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintEnd_toStartOf="@id/guideline_end"
+                    app:layout_constraintStart_toEndOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@+id/text_name"
+                    tools:text="Paradis" />
 
-               <androidx.appcompat.widget.AppCompatTextView
-                   android:id="@+id/text_blog"
-                   style="@style/TextAppearance.Kdg.Subtitle2"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="8dp"
-                   android:includeFontPadding="false"
-                   android:text="@{viewModel.blog}"
-                   android:textAlignment="center"
-                   android:textColor="@android:color/black"
-                   app:layout_constraintEnd_toStartOf="@id/guideline_end"
-                   app:layout_constraintStart_toEndOf="@id/guideline_start"
-                   app:layout_constraintTop_toBottomOf="@+id/text_company"
-                   tools:text="http://animeflix.io" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_blog"
+                    style="@style/TextAppearance.Kdg.Subtitle2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:includeFontPadding="false"
+                    android:text="@{viewModel.user.blog}"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintEnd_toStartOf="@id/guideline_end"
+                    app:layout_constraintStart_toEndOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@+id/text_company"
+                    tools:text="http://animeflix.io" />
 
-               <androidx.appcompat.widget.AppCompatTextView
-                   android:id="@+id/text_value_follower"
-                   style="@style/TextAppearance.Kdg.Subtitle2"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="16dp"
-                   android:text="@{viewModel.followerCount}"
-                   android:textColor="?colorPrimary"
-                   app:layout_constraintEnd_toStartOf="@+id/guideline_center"
-                   app:layout_constraintStart_toEndOf="@id/guideline_start"
-                   app:layout_constraintTop_toBottomOf="@+id/text_blog"
-                   tools:text="100" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_value_follower"
+                    style="@style/TextAppearance.Kdg.Subtitle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@{viewModel.user.followerCount}"
+                    android:textColor="?colorPrimary"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_center"
+                    app:layout_constraintStart_toEndOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@+id/text_blog"
+                    tools:text="100" />
 
-               <androidx.appcompat.widget.AppCompatTextView
-                   android:id="@+id/text_label_follower"
-                   style="@style/TextAppearance.Kdg.Body1"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="8dp"
-                   android:text="@string/label_followers"
-                   android:textColor="@android:color/black"
-                   app:layout_constraintEnd_toStartOf="@+id/guideline_center"
-                   app:layout_constraintStart_toEndOf="@id/guideline_start"
-                   app:layout_constraintTop_toBottomOf="@+id/text_value_follower" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_label_follower"
+                    style="@style/TextAppearance.Kdg.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/label_followers"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_center"
+                    app:layout_constraintStart_toEndOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@+id/text_value_follower" />
 
-               <androidx.appcompat.widget.AppCompatTextView
-                   android:id="@+id/text_value_following"
-                   style="@style/TextAppearance.Kdg.Subtitle2"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="16dp"
-                   android:text="@{viewModel.followingCount}"
-                   android:textColor="?colorPrimary"
-                   app:layout_constraintEnd_toStartOf="@id/guideline_end"
-                   app:layout_constraintStart_toStartOf="@+id/guideline_center"
-                   app:layout_constraintTop_toBottomOf="@+id/text_blog"
-                   tools:text="100" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_value_following"
+                    style="@style/TextAppearance.Kdg.Subtitle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@{viewModel.user.followingCount}"
+                    android:textColor="?colorPrimary"
+                    app:layout_constraintEnd_toStartOf="@id/guideline_end"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_center"
+                    app:layout_constraintTop_toBottomOf="@+id/text_blog"
+                    tools:text="100" />
 
-               <androidx.appcompat.widget.AppCompatTextView
-                   android:id="@+id/text_label_following"
-                   style="@style/TextAppearance.Kdg.Body1"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="8dp"
-                   android:text="@string/label_following"
-                   android:textColor="@android:color/black"
-                   app:layout_constraintEnd_toStartOf="@id/guideline_end"
-                   app:layout_constraintStart_toStartOf="@+id/guideline_center"
-                   app:layout_constraintTop_toBottomOf="@+id/text_value_following" />
-           </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_label_following"
+                    style="@style/TextAppearance.Kdg.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/label_following"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintEnd_toStartOf="@id/guideline_end"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_center"
+                    app:layout_constraintTop_toBottomOf="@+id/text_value_following" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-       </ScrollView>
+        </ScrollView>
 
-       <include
-           android:id="@+id/include_generic_error"
-           layout="@layout/include_generic_error"
-           app:goneUnless="@{safeUnbox(viewModel.isGenericErrorVisible())}"
-           tools:visibility="gone" />
+        <include
+            android:id="@+id/include_generic_error"
+            layout="@layout/include_generic_error"
+            app:goneUnless="@{safeUnbox(viewModel.isGenericErrorVisible())}"
+            tools:visibility="gone" />
 
-       <include
-           android:id="@+id/include_network_error"
-           layout="@layout/include_network_error"
-           app:goneUnless="@{safeUnbox(viewModel.isNetworkErrorVisible())}"
-           tools:visibility="gone" />
+        <include
+            android:id="@+id/include_network_error"
+            layout="@layout/include_network_error"
+            app:goneUnless="@{safeUnbox(viewModel.isNetworkErrorVisible())}"
+            tools:visibility="gone" />
 
 
-   </RelativeLayout>
+    </RelativeLayout>
 
 </layout>

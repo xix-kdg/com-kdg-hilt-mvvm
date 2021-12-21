@@ -4,7 +4,6 @@ import android.content.Context
 import com.kdg.hilt.mvvm.data.remote.domain.framework.Result
 import com.kdg.hilt.mvvm.data.remote.domain.framework.safeApiCall
 import com.kdg.hilt.mvvm.data.remote.domain.model.User
-import com.kdg.hilt.mvvm.data.remote.response.GetUserProfileResponse
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -27,15 +26,14 @@ class GitHubDataSource @Inject constructor(
             }
         }
 
-    // todo: adjust return value to non response object
-    suspend fun getUserProfile(username: String): Result<GetUserProfileResponse> =
+    suspend fun getUserProfile(username: String): Result<User> =
         when (val result = safeApiCall(
             { gitHubService.getUserProfile(username) },
             RESPONSE_ERROR_USER_PROFILE,
             context
         )) {
             is Result.Success -> {
-                Result.Success(result.data)
+                Result.Success(result.data.toUserProfile())
             }
             is Result.Error -> {
                 Result.Error(result.exception)

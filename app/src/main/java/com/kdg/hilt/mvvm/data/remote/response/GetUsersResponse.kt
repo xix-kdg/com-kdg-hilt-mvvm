@@ -24,7 +24,16 @@ class GetUsersResponse : ArrayList<GetUsersResponse.GetUsersResponseItem>() {
         val site_admin: Boolean = false,
     ) {
         fun toUser(): User {
-            return User(id = id, login = login, name = "", avatarUrl = avatar_url)
+            return User(
+                id = id,
+                login = login,
+                name = "",
+                avatarUrl = avatar_url,
+                company = "",
+                blog = "",
+                followerCount = "0",
+                followingCount = "0"
+            )
         }
     }
 }
