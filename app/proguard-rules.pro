@@ -21,5 +21,5 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keepclassmembers class com.kdg.hilt.mvvm.data.remote.response.** { *; }
--keepclassmembers class com.kdg.hilt.mvvm.data.remote.request.** { *; }
+-keep class com.kdg.hilt.mvvm.data.remote.response.** { *; }
+-keep class com.kdg.hilt.mvvm.data.remote.request.** { *; }
