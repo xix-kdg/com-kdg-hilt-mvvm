@@ -5,9 +5,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath ("com.android.tools.build:gradle:7.0.4")
-        classpath ("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31")
+        classpath("com.android.tools.build:gradle:7.0.4")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31")
         classpath("com.google.dagger:hilt-android-gradle-plugin:2.38.1")
+        classpath("com.google.gms:google-services:4.3.10")
     }
 }
 
@@ -23,6 +24,7 @@ val gson by extra("2.8.6")
 val retrofitConverter by extra("2.9.0")
 val httpLogging by extra("4.9.0")
 val glide by extra("4.12.0")
+val firebaseBom by extra("29.0.3")
 
 tasks {
     val clean by registering(Delete::class) {

@@ -7,6 +7,7 @@ plugins {
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
     id("kotlin-kapt")
+    id("com.google.gms.google-services")
 }
 
 val keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -84,6 +85,10 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:${rootProject.extra["constraintLayout"]}")
     implementation("androidx.activity:activity-ktx:${rootProject.extra["activityKtx"]}")
     implementation("com.google.android.material:material:${rootProject.extra["material"]}")
+
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:${rootProject.extra["firebaseBom"]}"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
 
     // Coroutine
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${rootProject.extra["coroutine"]}")
