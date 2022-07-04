@@ -3,13 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="viewModel"
-            type="com.kdg.hilt.mvvm.ui.users.presentation.MainViewModel" />
-    </data>
-
     <RelativeLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
@@ -20,7 +13,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
-            app:goneUnless="@{safeUnbox(viewModel.isContentVisible())}"
             tools:context=".ui.users.presentation.MainActivity">
 
             <com.google.android.material.appbar.AppBarLayout
@@ -53,7 +45,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:goneUnless="@{safeUnbox(viewModel.isLoadingIndicatorVisible())}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -65,13 +56,11 @@
         <include
             android:id="@+id/include_generic_error"
             layout="@layout/include_generic_error"
-            app:goneUnless="@{safeUnbox(viewModel.isGenericErrorVisible())}"
             tools:visibility="gone" />
 
         <include
             android:id="@+id/include_network_error"
             layout="@layout/include_network_error"
-            app:goneUnless="@{safeUnbox(viewModel.isNetworkErrorVisible())}"
             tools:visibility="gone" />
 
     </RelativeLayout>

@@ -11,6 +11,9 @@ import com.kdg.hilt.mvvm.framework.CoroutinesDispatcherProvider
 import com.kdg.hilt.mvvm.framework.Event
 import com.kdg.hilt.mvvm.ui.users.data.UserRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -22,20 +25,8 @@ class MainViewModel @Inject constructor(
     private val userRepositoryImpl: UserRepositoryImpl
 ) : ViewModel() {
 
-    private val _isContentVisible = MutableLiveData<Boolean>()
-    val isContentVisible: LiveData<Boolean> = _isContentVisible
-
-    private val _isLoadingIndicatorVisible = MutableLiveData<Boolean>()
-    val isLoadingIndicatorVisible: LiveData<Boolean> = _isLoadingIndicatorVisible
-
-    private val _isNetworkErrorVisible = MutableLiveData<Boolean>()
-    val isNetworkErrorVisible: LiveData<Boolean> = _isNetworkErrorVisible
-
-    private val _isGenericErrorVisible = MutableLiveData<Boolean>()
-    val isGenericErrorVisible: LiveData<Boolean> = _isGenericErrorVisible
-
-    private val _isSessionExpiredErrorVisible = MutableLiveData<Boolean>()
-    val isSessionExpiredErrorVisible: LiveData<Boolean> = _isSessionExpiredErrorVisible
+    private val _uiState = MutableStateFlow(MainUiState())
+    val uiState: StateFlow<MainUiState> = _uiState
 
     private val _users = MutableLiveData<List<User>>()
     val users: LiveData<List<User>> = _users
@@ -56,14 +47,14 @@ class MainViewModel @Inject constructor(
     }
 
     private fun loadUsers() {
-        _isLoadingIndicatorVisible.value = true
+        showLoading()
         viewModelScope.launch(dispatcherProvider.computation) {
             val result = userRepositoryImpl.getUsers(0)
             withContext(dispatcherProvider.main) {
                 when (result) {
                     is Result.Success -> {
-                        showContent()
                         _users.value = result.data
+                        showContent()
                     }
                     is Result.Error -> {
                         errorComponent.processError(
@@ -74,40 +65,75 @@ class MainViewModel @Inject constructor(
                         )
                     }
                 }
-                _isLoadingIndicatorVisible.value = false
             }
         }
     }
 
+    private fun showLoading() {
+        _uiState.update { currentUiState ->
+            currentUiState.copy(
+                isLoadingIndicatorVisible = true,
+                isSessionExpiredErrorVisible = false,
+                isGenericErrorVisible = false,
+                isNetworkErrorVisible = false,
+                isContentVisible = false
+            )
+        }
+    }
+
     private fun showContent() {
-        _isLoadingIndicatorVisible.value = false
-        _isGenericErrorVisible.value = false
-        _isSessionExpiredErrorVisible.value = false
-        _isNetworkErrorVisible.value = false
-        _isContentVisible.value = true
+        _uiState.update { currentUiState ->
+            currentUiState.copy(
+                isLoadingIndicatorVisible = false,
+                isSessionExpiredErrorVisible = false,
+                isGenericErrorVisible = false,
+                isNetworkErrorVisible = false,
+                isContentVisible = true
+            )
+        }
     }
 
     private fun showNetworkError() {
-        _isContentVisible.value = false
-        _isLoadingIndicatorVisible.value = false
-        _isGenericErrorVisible.value = false
-        _isSessionExpiredErrorVisible.value = false
-        _isNetworkErrorVisible.value = true
+        _uiState.update { currentUiState ->
+            currentUiState.copy(
+                isContentVisible = false,
+                isLoadingIndicatorVisible = false,
+                isSessionExpiredErrorVisible = false,
+                isGenericErrorVisible = false,
+                isNetworkErrorVisible = true,
+            )
+        }
     }
 
     private fun showGenericError() {
-        _isContentVisible.value = false
-        _isLoadingIndicatorVisible.value = false
-        _isNetworkErrorVisible.value = false
-        _isSessionExpiredErrorVisible.value = false
-        _isGenericErrorVisible.value = true
+        _uiState.update { currentUiState ->
+            currentUiState.copy(
+                isContentVisible = false,
+                isLoadingIndicatorVisible = false,
+                isNetworkErrorVisible = false,
+                isSessionExpiredErrorVisible = false,
+                isGenericErrorVisible = true
+            )
+        }
     }
 
     private fun showSessionExpiredError() {
-        _isContentVisible.value = false
-        _isLoadingIndicatorVisible.value = false
-        _isNetworkErrorVisible.value = false
-        _isGenericErrorVisible.value = false
-        _isSessionExpiredErrorVisible.value = true
+        _uiState.update { currentUiState ->
+            currentUiState.copy(
+                isContentVisible = false,
+                isLoadingIndicatorVisible = false,
+                isNetworkErrorVisible = false,
+                isGenericErrorVisible = false,
+                isSessionExpiredErrorVisible = true
+            )
+        }
     }
+
+    data class MainUiState(
+        val isContentVisible: Boolean = false,
+        val isLoadingIndicatorVisible: Boolean = false,
+        val isNetworkErrorVisible: Boolean = false,
+        val isSessionExpiredErrorVisible: Boolean = false,
+        val isGenericErrorVisible: Boolean = false
+    )
 }
