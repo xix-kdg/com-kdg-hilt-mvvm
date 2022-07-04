@@ -56,13 +56,15 @@ class MainActivity : AppCompatActivity() {
         })
 
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.uiState.collect { uiState ->
-                    binding.progressBar.isVisible = uiState.isLoadingIndicatorVisible
-                    binding.layoutContent.isVisible = uiState.isContentVisible
-                    binding.includeGenericError.root.isVisible = uiState.isGenericErrorVisible
-                    binding.includeNetworkError.root.isVisible = uiState.isNetworkErrorVisible
-                    // todo: session expired if supported
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.uiState.collect {
+                        binding.progressBar.isVisible = it.isLoadingIndicatorVisible
+                        binding.layoutContent.isVisible = it.isContentVisible
+                        binding.includeGenericError.root.isVisible = it.isGenericErrorVisible
+                        binding.includeNetworkError.root.isVisible = it.isNetworkErrorVisible
+                        // todo: session expired if supported
+                    }
                 }
             }
         }
